@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright 2012 Igor Vaynberg
 
 Version: @@ver@@ Timestamp: @@timestamp@@
@@ -1857,6 +1857,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusser.attr("tabindex", this.elementTabIndex);
 
             this.search.on("keydown", this.bind(function (e) {
+                if (e.which != KEY.ESC) e.stopPropagation();
+
                 if (!this.isInterfaceEnabled()) return;
 
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
@@ -1896,6 +1898,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.focusser.on("keydown", this.bind(function (e) {
+                if (e.which !== KEY.ESC && e.which !== KEY.ENTER) e.stopPropagation();
+
                 if (!this.isInterfaceEnabled()) return;
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
@@ -1903,7 +1907,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
-                    killEvent(e);
+                    // Allow 'Enter' key to propagate
+                    //killEvent(e);
                     return;
                 }
 
